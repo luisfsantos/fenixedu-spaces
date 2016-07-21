@@ -189,6 +189,10 @@ var thisSpec = {};
     </c:if>
   </div>
   <div class="form-group">
+    <form:label for="spacePhotoFileInput" path="spacePhotoMultipartFile"><spring:message code="label.spaces.photo"/></form:label>
+    <form:input type="file" accept="image/*" class="form-control" id="spacePhotoFileInput" path="spacePhotoMultipartFile"/>
+  </div>
+  <div class="form-group">
     <form:label for="blueprintNumberInput" path="blueprintNumber"><spring:message code="label.spaces.blueprintNumber"/></form:label>
     <form:input type="number" class="form-control" id="blueprintNumberInput" path="blueprintNumber" min="0" placeholder="Blueprint Number"/>
   </div>

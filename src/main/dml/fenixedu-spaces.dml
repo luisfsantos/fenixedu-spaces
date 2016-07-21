@@ -51,6 +51,10 @@ relation SpaceOccupators {
 }
 
 class BlueprintFile extends .org.fenixedu.bennu.io.domain.GenericFile;
+class submission.SpacePhoto extends .org.fenixedu.bennu.io.domain.GenericFile {
+	DateTime created;
+	boolean visible;
+}
 
 class SpaceClassification {
 	String code;
@@ -75,6 +79,13 @@ class occupation.requests.OccupationRequest  {
 class occupation.requests.OccupationStateInstant  {
     DateTime instant;
     OccupationRequestState requestState;
+}
+
+relation PhotoSubmissionPerson {
+	.org.fenixedu.bennu.core.domain.User playsRole submitor;
+	submission.SpacePhoto playsRole spacePhotoSubmission {
+		multiplicity *;
+	}
 }
 
 relation SpaceOccupationsAccessGroup {
@@ -194,6 +205,22 @@ relation InformationBlueprint {
 	Information playsRole information {
 	    multiplicity *;
 	}
+}
+
+relation InformationSpacePhoto {
+	submission.SpacePhoto playsRole spacePhoto {
+		multiplicity *;
+	}
+	Information playsRole information {
+	    multiplicity *;
+	}
+}
+
+relation SpacePhotoPendingApproval {
+	submission.SpacePhoto playsRole spacePhotoPending {
+		multiplicity *;
+	}
+	Space playsRole space;
 }
 
 relation InformationClassification {
