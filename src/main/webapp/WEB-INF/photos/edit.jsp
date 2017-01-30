@@ -31,7 +31,7 @@
 	
   	<c:if test="${not empty spacePhotos.pageList}">
   	   	<c:set var="searchPageUrl" value="${searchUrl}${searchId}"/>
-  	   	<h3><spring:message code="title.photo.review.list"/></h3>
+  	   	<h3><spring:message code="title.photo.edit.list"/></h3>
   		<ul class="pagination">
 	  		<li><a href="${searchPageUrl}?p=f">&laquo;</a></li>
   			<c:forEach var="page" begin="${requests.firstLinkedPage}" end="${requests.lastLinkedPage}">
@@ -62,7 +62,7 @@
           			<spring:url var="formUrl" value="/spaces/photos/${photo.externalId}" />
 					<tr>
 						<td>
-							<a href="${viewUrl}"><c:out value="${space.fullName}"/></a>
+							<a href="${viewUrl}"><c:out value="${space.presentationName}"/></a>
 						</td>
 						<td>
 							<img src="${spacePhotoUrl}" class="center-block img-responsive" style="max-height: 450px;"/>

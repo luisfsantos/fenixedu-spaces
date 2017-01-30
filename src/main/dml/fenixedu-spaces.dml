@@ -56,6 +56,12 @@ class submission.SpacePhoto extends .org.fenixedu.bennu.io.domain.GenericFile {
 	boolean visible;
 }
 
+class submission.SpacePhotoSubmission {
+	DateTime created;
+	DateTime modified;
+	String rejectionMessage;
+}
+
 class SpaceClassification {
 	String code;
 	LocalizedString name;
@@ -81,11 +87,32 @@ class occupation.requests.OccupationStateInstant  {
     OccupationRequestState requestState;
 }
 
+/* no longer valid*/
 relation PhotoSubmissionPerson {
 	.org.fenixedu.bennu.core.domain.User playsRole submitor;
-	submission.SpacePhoto playsRole spacePhotoSubmission {
+	submission.SpacePhoto playsRole spacePhotoSubmissionDeprecated {
 		multiplicity *;
 	}
+}
+/*---*/
+
+relation SpacePhotoSubmissionPerson {
+	.org.fenixedu.bennu.core.domain.User playsRole submitor;
+	submission.SpacePhotoSubmission playsRole spacePhotoSubmission {
+		multiplicity *;
+	}
+}
+
+relation SpacePhotoSubmissionReviewer {
+	.org.fenixedu.bennu.core.domain.User playsRole reviewer;
+	submission.SpacePhotoSubmission playsRole spacePhotoSubmissionsReviewed {
+		multiplicity *;
+	}
+}
+
+relation SpacePhotoSubmissionPhoto {
+	submission.SpacePhoto playsRole photo;
+	submission.SpacePhotoSubmission playsRole submission;
 }
 
 relation SpaceOccupationsAccessGroup {
@@ -216,12 +243,29 @@ relation InformationSpacePhoto {
 	}
 }
 
+/* no longer valid*/
 relation SpacePhotoPendingApproval {
 	submission.SpacePhoto playsRole spacePhotoPending {
 		multiplicity *;
 	}
 	Space playsRole space;
 }
+/*-----*/
+relation SpacePhotoSubmissionPendingApproval {
+	submission.SpacePhotoSubmission playsRole spacePhotoSubmissionPending {
+		multiplicity *;
+	}
+	Space playsRole spacePending;
+}
+
+relation SpacePhotoSubmissionArchived {
+	submission.SpacePhotoSubmission playsRole spacePhotoSubmissionArchived {
+		multiplicity *;
+	}
+	Space playsRole spaceArchived;
+}
+
+
 
 relation InformationClassification {
 	Information playsRole informations {

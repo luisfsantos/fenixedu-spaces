@@ -64,7 +64,7 @@
           			<spring:url var="formUrl" value="/spaces/photos/${photo.externalId}" />
 					<tr>
 						<td>
-							<a href="${viewUrl}"><c:out value="${space.fullName}"/></a>
+							<a href="${viewUrl}"><c:out value="${space.presentationName}"/></a>
 						</td>
 						<td>
 							<img src="${spacePhotoUrl}" class="center-block img-responsive" style="max-height: 450px;"/>

@@ -14,6 +14,9 @@ public class SpacePhoto extends SpacePhoto_Base {
         setSubmitor(submitor);
         setVisible(true);
         init(filename, filename, content);
+        // setModified
+        // setHandler
+        // rejectionReason
     }
 
     public static final Comparator<SpacePhoto> COMPARATOR_BY_INSTANT = new Comparator<SpacePhoto>() {
@@ -51,6 +54,9 @@ public class SpacePhoto extends SpacePhoto_Base {
 
     @Override
     public void delete() {
+        //TODO: for review:
+        //  need to remove from all informations for this to be a proper delete
+        //  as I had only thought in the case it was rejected
         super.setSubmitor(null);
         super.setSpace(null);
         super.delete();

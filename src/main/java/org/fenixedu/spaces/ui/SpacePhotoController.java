@@ -32,7 +32,7 @@ public class SpacePhotoController {
     public String submit(@PathVariable Space space, @ModelAttribute PhotoSubmissionBean photoSubmissionBean,
             BindingResult errors) {
         if (!photoSubmissionBean.isImageFile()) {
-            return "redirect:spaces/photos/" + space.getExternalId();
+            return "redirect:spaces/photos/" + space.getExternalId(); //TODO
         }
         photoService.createSubmission(photoSubmissionBean, space);
         return "redirect:/spaces-view/view/" + space.getExternalId();
