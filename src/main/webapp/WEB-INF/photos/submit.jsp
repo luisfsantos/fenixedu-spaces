@@ -30,16 +30,33 @@
 <script type="text/javascript" src="${baseUrl}/js/sprintf.min.js">
 </script>
 
+<spring:url var="viewUrl" value="/spaces-view/view/${space.externalId}" />
+
 <div class="page-header">
-  <h1><fmt:message key="title.space.photo.submit"/><small><spring:message code="title.space.photo.submit"/></small></h1>
+  <h1><fmt:message key="title.space.photo.submit"/><br><small><a href="${viewUrl}"><c:out value="${space.presentationName}"/></a></small></h1>
 </div>
 
 <spring:url var="formActionUrl" value="${action}"/>
 <form:form modelAttribute="photoSubmission" role="form" method="post" action="${formActionUrl}" enctype="multipart/form-data">
   
+  <img id="myimage" style="max-height: 150px;" class="img-thumbnail" src="http://placehold.it/350x150" alt="Your Image" />
+    <script type="text/javascript">
+      function readURL(input) {
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+
+                reader.onload = function (e) {
+                    $('#myimage')
+                        .attr('src', e.target.result);
+                };
+
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+    </script>
   <div class="form-group">
     <form:label for="spacePhotoFileInput" path="submissionMultipartFile"><spring:message code="label.spaces.photo"/></form:label>
-    <form:input type="file" accept="image/*" class="form-control" id="spacePhotoFileInput" path="submissionMultipartFile"/>
+    <form:input type="file" accept="image/*" required="true" onchange="readURL(this)" class="form-control input" id="spacePhotoFileInput" path="submissionMultipartFile"/>
   </div>
   
   <button type="submit" class="btn btn-default"><spring:message code="label.submit"/></button>

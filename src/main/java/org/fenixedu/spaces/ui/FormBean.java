@@ -6,6 +6,7 @@ public class FormBean {
 
     private Space space;
     private String page;
+    private String rejectMessage;
 
     public Space getSpace() {
         return space;
@@ -21,6 +22,14 @@ public class FormBean {
 
     public void setPage(String page) {
         this.page = page;
+    }
+
+    public String getRejectMessage() {
+        return rejectMessage;
+    }
+
+    public void setRejectMessage(String rejectMessage) {
+        this.rejectMessage = rejectMessage;
     }
 
 }

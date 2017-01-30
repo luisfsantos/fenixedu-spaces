@@ -8,15 +8,17 @@ import org.joda.time.DateTime;
 
 public class SpacePhoto extends SpacePhoto_Base {
 
+    @Deprecated
     public SpacePhoto(String filename, byte[] content, User submitor) {
+        this(filename, content);
+        setSubmitor(submitor);
+    }
+
+    public SpacePhoto(String filename, byte[] content) {
         super();
         setCreated(new DateTime());
-        setSubmitor(submitor);
         setVisible(true);
         init(filename, filename, content);
-        // setModified
-        // setHandler
-        // rejectionReason
     }
 
     public static final Comparator<SpacePhoto> COMPARATOR_BY_INSTANT = new Comparator<SpacePhoto>() {

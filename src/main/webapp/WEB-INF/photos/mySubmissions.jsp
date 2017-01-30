@@ -29,7 +29,7 @@
   	<h1><spring:message code="title.photo.review"/></h1>
 	
 	
-  	<c:if test="${not empty submissions.pageList}">
+  	<c:if test="${not empty mySubmissions.pageList}">
   	   	<c:set var="searchPageUrl" value="${searchUrl}${searchId}"/>
   	   	<h3><spring:message code="title.photo.review.list"/></h3>
   		<ul class="pagination">
@@ -54,7 +54,7 @@
 	  			<th></th>
 	  		</thead>
 	  		<tbody>
-	  			<c:forEach var="photoSubmission" items="${submissions.pageList}">
+	  			<c:forEach var="photoSubmission" items="${mySubmissions.pageList}">
 					<c:set var="photo" value="${photoSubmission.photo}" />
 					<c:set var="subject" value="${photoSubmission.submitor}" />
 					<c:set var="date" value="${photoSubmission.created}" />
@@ -102,7 +102,7 @@
 	   	</table>
   	</c:if>
   	
-  	<c:if test="${empty submissions.pageList}">
+  	<c:if test="${empty mySubmissions.pageList}">
   		<em><spring:message code="space.photo.none"></spring:message></em>
   	</c:if>
 </div>
