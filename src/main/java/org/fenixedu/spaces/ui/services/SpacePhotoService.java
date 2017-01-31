@@ -21,16 +21,7 @@ import pt.ist.fenixframework.Atomic;
 @Service
 public class SpacePhotoService {
 
-    @Deprecated
-    @Atomic
-    public SpacePhoto createSubmission(PhotoSubmissionBean bean, Space space) {
-        SpacePhoto photo =
-                new SpacePhoto(bean.getSubmissionMultipartFile().getName(), bean.getSubmissionContent(), bean.getSubmitor());
-        //TODO: to be safe this should be linked to the SpacePhoto but sometimes it doesn't go through a pending phase
-        space.addSpacePhotoPending(photo);
-        return photo;
-
-    }
+    private final int PHOTOS_IN_PAGE = 10;
 
     @Atomic
     public SpacePhotoSubmission createPhotoSubmission(PhotoSubmissionBean bean, Space space) {
@@ -40,13 +31,6 @@ public class SpacePhotoService {
 
     }
 
-    @Deprecated
-    public List<SpacePhoto> getPhotoSubmissionsToProcess(Space space) {
-        Set<Space> allSpaces = space.getChildTree();
-        List<SpacePhoto> allPendingPhotos = allSpaces.stream().map(s -> s.getSpacePhotoPendingSet()).flatMap(set -> set.stream())
-                .collect(Collectors.toList());
-        return allPendingPhotos.stream().sorted(SpacePhoto.COMPARATOR_BY_INSTANT.reversed()).collect(Collectors.toList());
-    }
 
     public List<SpacePhotoSubmission> getSpacePhotoSubmissionsToProcess(Space space) {
         Set<Space> allSpaces = space.getChildTree();
@@ -69,7 +53,7 @@ public class SpacePhotoService {
 
     public PagedListHolder<SpacePhoto> getPhotoBook(List<SpacePhoto> photos, String pageString) {
         PagedListHolder<SpacePhoto> book = new PagedListHolder<>(photos);
-        book.setPageSize(10);
+        book.setPageSize(PHOTOS_IN_PAGE);
         int page = 0;
 
         if (Strings.isNullOrEmpty(pageString)) {
@@ -91,7 +75,7 @@ public class SpacePhotoService {
 
     public PagedListHolder<SpacePhotoSubmission> getSubmissionBook(List<SpacePhotoSubmission> submissions, String pageString) {
         PagedListHolder<SpacePhotoSubmission> book = new PagedListHolder<>(submissions);
-        book.setPageSize(10);
+        book.setPageSize(PHOTOS_IN_PAGE);
         int page = 0;
 
         if (Strings.isNullOrEmpty(pageString)) {
@@ -151,5 +135,20 @@ public class SpacePhotoService {
     public List<SpacePhotoSubmission> getUserSpacePhotoSubmissions(User user) {
         return user.getSpacePhotoSubmissionSet().stream().sorted(SpacePhotoSubmission.COMPARATOR_BY_INSTANT)
                 .collect(Collectors.toList());
+    }
+
+    public List<SpacePhotoSubmission> getPendingUserSubmissions(User user) {
+        return user.getSpacePhotoSubmissionSet().stream().filter(s -> s.isPending())
+                .sorted(SpacePhotoSubmission.COMPARATOR_BY_INSTANT).collect(Collectors.toList());
+    }
+
+    public List<SpacePhotoSubmission> getAcceptedUserSubmissions(User user) {
+        return user.getSpacePhotoSubmissionSet().stream().filter(s -> s.isAccepted())
+                .sorted(SpacePhotoSubmission.COMPARATOR_BY_INSTANT).collect(Collectors.toList());
+    }
+
+    public List<SpacePhotoSubmission> getRejectedUserSubmissions(User user) {
+        return user.getSpacePhotoSubmissionSet().stream().filter(s -> s.isRejected())
+                .sorted(SpacePhotoSubmission.COMPARATOR_BY_INSTANT).collect(Collectors.toList());
     }
 }

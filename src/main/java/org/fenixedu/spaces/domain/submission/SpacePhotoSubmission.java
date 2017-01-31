@@ -67,4 +67,31 @@ public class SpacePhotoSubmission extends SpacePhotoSubmission_Base {
         super.setModified(instant);
     }
 
+    public boolean isPending() {
+        if (getSpacePending() != null) {
+            return true;
+        }
+        return false;
+    }
+
+    public boolean isRejected() {
+        if (getSpaceArchived() != null && getRejectionMessage() != null) {
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * The submission may have been accepted but later deleted in this case the state is still accepted.
+     * 
+     * @return
+     */
+    public boolean isAccepted() {
+        if (getSpacePending() == null
+                && ((getSpaceArchived() == null) || (getSpaceArchived() != null && getRejectionMessage() == null))) {
+            return true;
+        }
+        return false;
+    }
+
 }

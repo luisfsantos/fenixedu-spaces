@@ -9,49 +9,18 @@ import org.fenixedu.spaces.ui.services.SpacePhotoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
-@BennuSpringController(SpaceSearchController.class)
+@BennuSpringController(SpacesController.class)
 @RequestMapping("/spaces/photos")
 public class SpacePhotoController {
 
     @Autowired
     SpacePhotoService photoService;
-    
-    @RequestMapping(method = RequestMethod.GET)
-    public String home(Model model) {
-        return mySubmissions(model, "1");
-    }
-
-    @RequestMapping(value = "/my", method = RequestMethod.GET)
-    public String mySubmissions(Model model, @RequestParam(defaultValue = "1") String p) {
-        model.addAttribute("mySubmissions",
-                photoService.getSubmissionBook(photoService.getUserSpacePhotoSubmissions(Authenticate.getUser()), p));
-        return "photos/mySubmissions";
-    }
-    
-    @RequestMapping(value = "{space}", method = RequestMethod.GET)
-    public String submit(@PathVariable Space space, Model model) {
-        PhotoSubmissionBean bean = new PhotoSubmissionBean();
-        model.addAttribute("photoSubmission", bean);
-        model.addAttribute("space", space);
-        return "photos/submit";
-    }
-
-    @RequestMapping(value = "{space}", method = RequestMethod.POST)
-    public String submit(@PathVariable Space space, @ModelAttribute PhotoSubmissionBean photoSubmissionBean,
-            BindingResult errors) {
-        if (!photoSubmissionBean.isImageFile()) {
-            return "redirect:/spaces/photos/" + space.getExternalId(); //TODO
-        }
-        photoService.createPhotoSubmission(photoSubmissionBean, space);
-        return "redirect:/spaces-view/view/" + space.getExternalId();
-    }
 
     @RequestMapping(value = "/review/{space}", method = RequestMethod.GET)
     public String pendingPhotos(@PathVariable Space space, Model model, @RequestParam(defaultValue = "1") String p) {

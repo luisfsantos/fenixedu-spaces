@@ -146,3 +146,4 @@
 			</table>
 		</div>
 	</c:forEach>
+</div>

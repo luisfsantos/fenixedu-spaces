@@ -189,7 +189,7 @@
 					<th scope="row"><spring:message code="label.spaces.photo" /></th>
 					<c:if test="${not empty currentUser}">
 						<td>
-							<spring:url var="submitPhoto" value="/spaces/photos/${space.externalId}" />
+							<spring:url var="submitPhoto" value="/spaces/photos/submissions/my/create/${space.externalId}" />
 							<a href="${submitPhoto}"><spring:message code="label.spaces.suggestPhoto"/></a>
 							<c:if test="${space.isSpaceManagementMember(currentUser)}">
 								<spring:url var="editSpacePhotos" value="/spaces/photos/edit/${space.externalId}" />

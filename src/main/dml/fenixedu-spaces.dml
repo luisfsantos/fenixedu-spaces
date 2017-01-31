@@ -243,14 +243,6 @@ relation InformationSpacePhoto {
 	}
 }
 
-/* no longer valid*/
-relation SpacePhotoPendingApproval {
-	submission.SpacePhoto playsRole spacePhotoPending {
-		multiplicity *;
-	}
-	Space playsRole space;
-}
-/*-----*/
 relation SpacePhotoSubmissionPendingApproval {
 	submission.SpacePhotoSubmission playsRole spacePhotoSubmissionPending {
 		multiplicity *;

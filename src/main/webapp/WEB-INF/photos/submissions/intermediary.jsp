@@ -1,4 +1,4 @@
-<%--
+intermediary.jsp<%--
 
     Copyright © 2014 Instituto Superior Técnico
 
@@ -26,12 +26,12 @@
 
 
 <div class="page-header">
-  	<h1><spring:message code="title.photo.review"/></h1>
+  	<h1><spring:message code="title.photo.my.submissions"/></h1>
 	
 	
   	<c:if test="${not empty mySubmissions.pageList}">
   	   	<c:set var="searchPageUrl" value="${searchUrl}${searchId}"/>
-  	   	<h3><spring:message code="title.photo.review.list"/></h3>
+  	   	<h3><spring:message code="title.photo.my.pending"/></h3>
   		<ul class="pagination">
 	  		<li><a href="${searchPageUrl}?p=f">&laquo;</a></li>
   			<c:forEach var="page" begin="${requests.firstLinkedPage}" end="${requests.lastLinkedPage}">
@@ -49,19 +49,20 @@
 	  		<thead>
 	  			<th><spring:message code="label.space" /></th>
 	  			<th><spring:message code="label.photo" /></th>
-	  			<th><spring:message code="label.photo.user" /></th>
+	  			<th><spring:message code="label.photo.reviewer" /></th>
+	  			<th><spring:message code="label.photo.rejection.motive" /></th>
 	  			<th><spring:message code="label.photo.date" /></th>
 	  			<th></th>
 	  		</thead>
 	  		<tbody>
 	  			<c:forEach var="photoSubmission" items="${mySubmissions.pageList}">
 					<c:set var="photo" value="${photoSubmission.photo}" />
-					<c:set var="subject" value="${photoSubmission.submitor}" />
+					<c:set var="subject" value="${photoSubmission.reviewer}" />
 					<c:set var="date" value="${photoSubmission.created}" />
 					<c:set var="space" value="${photoSubmission.spacePending}" />
           			<spring:url var="spacePhotoUrl" value="/spaces-view/photo/${photo.externalId}" />
           			<spring:url var="viewUrl" value="/spaces-view/view/${space.externalId}" />
-          			<spring:url var="formUrl" value="/spaces/photos/${photoSubmission.externalId}" />
+          			<spring:url var="formUrl" value="/spaces/photos/my/${photoSubmission.externalId}" />
 					<tr>
 						<td>
 							<a href="${viewUrl}"><c:out value="${space.presentationName}"/></a>
@@ -72,29 +73,14 @@
 						<td>
 							<a href="mailto:${subject.email}"><c:out value="${subject.name}"/></a> (<c:out value="${subject.username}"/>)
 						</td>
+						<td><c:out value="${photoSubmission.rejectionMessage}"/></td>
 	 					<td><c:out value="${date.toString('dd/MM/yyyy hh:mm')}"/></td>
 	 					<td>
-		 					<table>
-		 						<tr>
-		 							<td style="padding:5px;">
-		 								<form id="form" role="form" class="accept" action="${formUrl}/accept" method="POST">
-		 									<input type="hidden" name="space" value="${space.externalId}">
-		 									<input type="hidden" name="page" value="${page}">
-											<button type="submit" class="btn btn-xs btn-default"><i class="glyphicon glyphicon-ok"></i>  <spring:message code="label.photo.accept" /></button>
-										</form>
-									</td>
-		 						</tr>
-		 						<tr>
-		 							<td style="padding:5px;">
-		 								<form id="form" role="form" class="reject" action="${formUrl}/reject" method="POST">
-		 									<input type="hidden" name="space" value="${space.externalId}">
-		 									<input type="hidden" name="page" value="${page}">
-		 									<input type="text" class="form-control" name="rejectMessage" required>
-											<button type="submit" class="btn btn-xs btn-default"><i class="glyphicon glyphicon-remove-sign"></i> <spring:message code="label.photo.reject" /></button>
-										</form>
-									</td>
-		 						</tr>
-		 					</table>
+		 					<form id="form" role="form" class="accept" action="${formUrl}/cancel" method="POST">
+								<input type="hidden" name="space" value="${space.externalId}">
+								<input type="hidden" name="page" value="${page}">
+								<button type="submit" class="btn btn-xs btn-default"><i class="glyphicon glyphicon-ok"></i>  <spring:message code="label.photo.accept" /></button>
+							</form>
 						</td>
 					</tr>
 				</c:forEach>
