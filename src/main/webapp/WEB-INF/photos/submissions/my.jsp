@@ -37,11 +37,13 @@
 <c:set var="rejected" value="3" />
 
 <!-- Nav tabs -->
-<ul class="nav nav-tabs">
+<ul class="nav nav-tabs" id="myTabs">
   	<li><a href="#${pending}" data-toggle="tab"><spring:message code="title.photo.my.pending"/></a></li>
   	<li><a href="#${accepted}" data-toggle="tab"><spring:message code="title.photo.my.accepted"/></a></li>
   	<li><a href="#${rejected}" data-toggle="tab"><spring:message code="title.photo.my.rejected"/></a></li>
 </ul>
+
+<spring:url var="searchPageUrl" value="/spaces/photos/submissions/my" />
 
 <div class="tab-content">
 	<!-- Pending Content -->
@@ -61,8 +63,22 @@
 </div>
 
 <script type="text/javascript">
-	$(document).ready(function() {
-		$("ul li").last().addClass("active");
-		$(".tab-pane").last().addClass("in active");
-	});
+  $('#myTabs a').click(function(e) {
+    e.preventDefault();
+    $(this).tab('show');
+  });
+
+  // store the currently selected tab in the hash value
+  $("ul.nav-tabs > li > a").on("shown.bs.tab", function(e) {
+    var id = $(e.target).attr("href").substr(1);
+    window.location.hash = id;
+  });
+
+  // on load of the page: switch to the currently selected tab
+  var hash = window.location.hash;
+  if (hash === '') {
+    $("ul.nav-tabs li").first().addClass("active");
+    $(".tab-pane").first().addClass("active in");
+  }
+  $('#myTabs a[href="' + hash + '"]').tab('show');
 </script>

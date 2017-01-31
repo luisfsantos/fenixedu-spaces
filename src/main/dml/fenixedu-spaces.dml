@@ -257,6 +257,13 @@ relation SpacePhotoSubmissionArchived {
 	Space playsRole spaceArchived;
 }
 
+relation SpacePhotoSubmission {
+	submission.SpacePhotoSubmission playsRole spacePhotoSubmission {
+		multiplicity *;
+	}
+	Space playsRole space;
+}
+
 
 
 relation InformationClassification {

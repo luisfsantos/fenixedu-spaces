@@ -24,15 +24,14 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 
 <c:if test="${not empty pendingSubmissions.pageList}">
-    <c:set var="searchPageUrl" value="${searchUrl}${searchId}"/>
     <ul class="pagination">
         <li><a href="${searchPageUrl}?p=f">&laquo;</a></li>
-        <c:forEach var="page" begin="${requests.firstLinkedPage}" end="${requests.lastLinkedPage}">
+        <c:forEach var="page" begin="${pendingSubmissions.firstLinkedPage}" end="${pendingSubmissions.lastLinkedPage}">
             <c:set var="pageNumber" value="${page+1}"/>
-            <c:if test="${page == requests.page}">
+            <c:if test="${page == pendingSubmissions.page}">
                 <li class="active"><a href="${searchPageUrl}?p=${pageNumber}">${pageNumber}</a></li>
             </c:if>
-            <c:if test="${page != requests.page}">
+            <c:if test="${page != pendingSubmissions.page}">
                 <li><a href="${searchPageUrl}?p=${pageNumber}">${pageNumber}</a></li>
             </c:if>
         </c:forEach>
@@ -58,14 +57,14 @@
                         <a href="${viewUrl}"><c:out value="${space.presentationName}"/></a>
                     </td>
                     <td>
-                        <img src="${spacePhotoUrl}" class="center-block img-responsive" style="max-height: 450px;"/>
+                        <img src="${spacePhotoUrl}" class="img-responsive" style="max-height: 450px;"/>
                     </td>
                     <td><c:out value="${date.toString('dd/MM/yyyy hh:mm')}"/></td>
                     <td>
                         <form id="form" role="form" class="accept" action="${formUrl}/cancel" method="POST">
                             <input type="hidden" name="space" value="${space.externalId}">
                             <input type="hidden" name="page" value="${page}">
-                            <button type="submit" class="btn btn-xs btn-default"><i class="glyphicon glyphicon-ok"></i>  <spring:message code="label.photo.submission.cancel" /></button>
+                            <button type="submit" class="btn btn-xs btn-default"><i class="glyphicon glyphicon-remove"></i>  <spring:message code="label.photo.submission.cancel" /></button>
                         </form>
                     </td>
                 </tr>

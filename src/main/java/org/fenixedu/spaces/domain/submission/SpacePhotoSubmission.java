@@ -11,6 +11,7 @@ public class SpacePhotoSubmission extends SpacePhotoSubmission_Base {
     
     public SpacePhotoSubmission(Space space, User submitor, SpacePhoto photo) {
         super();
+        setSpace(space);
         setSpacePending(space);
         DateTime init = new DateTime();
         setCreated(init);

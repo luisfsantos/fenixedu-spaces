@@ -25,15 +25,14 @@
 
 
 <c:if test="${not empty acceptedSubmissions.pageList}">
-        <c:set var="searchPageUrl" value="${searchUrl}${searchId}"/>
         <ul class="pagination">
             <li><a href="${searchPageUrl}?p=f">&laquo;</a></li>
-            <c:forEach var="page" begin="${requests.firstLinkedPage}" end="${requests.lastLinkedPage}">
+            <c:forEach var="page" begin="${acceptedSubmissions.firstLinkedPage}" end="${acceptedSubmissions.lastLinkedPage}">
                 <c:set var="pageNumber" value="${page+1}"/>
-                <c:if test="${page == requests.page}">
+                <c:if test="${page == acceptedSubmissions.page}">
                     <li class="active"><a href="${searchPageUrl}?p=${pageNumber}">${pageNumber}</a></li>
                 </c:if>
-                <c:if test="${page != requests.page}">
+                <c:if test="${page != acceptedSubmissions.page}">
                     <li><a href="${searchPageUrl}?p=${pageNumber}">${pageNumber}</a></li>
                 </c:if>
             </c:forEach>
@@ -48,11 +47,11 @@
                 <th></th>
             </thead>
             <tbody>
-                <c:forEach var="photoSubmission" items="${rejectedSubmissions.pageList}">
+                <c:forEach var="photoSubmission" items="${acceptedSubmissions.pageList}">
                     <c:set var="photo" value="${photoSubmission.photo}" />
                     <c:set var="subject" value="${photoSubmission.reviewer}" />
                     <c:set var="date" value="${photoSubmission.created}" />
-                    <c:set var="space" value="${photo.space}" />
+                    <c:set var="space" value="${photoSubmission.space}" />
                     <spring:url var="spacePhotoUrl" value="/spaces-view/photo/${photo.externalId}" />
                     <spring:url var="viewUrl" value="/spaces-view/view/${space.externalId}" />
                     <spring:url var="formUrl" value="/spaces/photos/my/${photoSubmission.externalId}" />
@@ -61,25 +60,18 @@
                             <a href="${viewUrl}"><c:out value="${space.presentationName}"/></a>
                         </td>
                         <td>
-                            <img src="${spacePhotoUrl}" class="center-block img-responsive" style="max-height: 450px;"/>
+                            <img src="${spacePhotoUrl}" class="img-responsive" style="max-height: 450px;"/>
                         </td>
                         <td>
                             <a href="mailto:${subject.email}"><c:out value="${subject.name}"/></a> (<c:out value="${subject.username}"/>)
                         </td>
                         <td><c:out value="${date.toString('dd/MM/yyyy hh:mm')}"/></td>
-                        <td>
-                            <form id="form" role="form" class="accept" action="${formUrl}/cancel" method="POST">
-                                <input type="hidden" name="space" value="${space.externalId}">
-                                <input type="hidden" name="page" value="${page}">
-                                <button type="submit" class="btn btn-xs btn-default"><i class="glyphicon glyphicon-ok"></i>  <spring:message code="label.photo.accept" /></button>
-                            </form>
-                        </td>
                     </tr>
                 </c:forEach>
             </tbody>
         </table>
     </c:if>
     
-    <c:if test="${empty rejectedSubmissions.pageList}">
+    <c:if test="${empty acceptedSubmissions.pageList}">
         <em><spring:message code="space.photo.none"></spring:message></em>
     </c:if>

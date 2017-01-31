@@ -3,7 +3,6 @@ package org.fenixedu.spaces.domain.submission;
 import java.util.Comparator;
 
 import org.fenixedu.bennu.core.domain.User;
-import org.fenixedu.spaces.domain.Space;
 import org.fenixedu.spaces.domain.SpaceDomainException;
 import org.joda.time.DateTime;
 
@@ -55,18 +54,8 @@ public class SpacePhoto extends SpacePhoto_Base {
         return true;
     }
 
-    public Space getSpace() {
-        if (getInformationSet().isEmpty()) {
-            return null;
-        }
-        return getInformationSet().stream().findFirst().get().getSpaceHistory();
-    }
-
     @Override
     public void delete() {
-        //TODO: for review:
-        //  need to remove from all informations for this to be a proper delete
-        //  as I had only thought in the case it was rejected
         super.setSubmitor(null);
         super.delete();
     }

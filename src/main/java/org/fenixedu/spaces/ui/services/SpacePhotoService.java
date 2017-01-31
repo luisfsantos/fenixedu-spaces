@@ -31,7 +31,6 @@ public class SpacePhotoService {
 
     }
 
-
     public List<SpacePhotoSubmission> getSpacePhotoSubmissionsToProcess(Space space) {
         Set<Space> allSpaces = space.getChildTree();
         List<SpacePhotoSubmission> allPendingPhotos = allSpaces.stream().map(s -> s.getSpacePhotoSubmissionPendingSet())
@@ -133,22 +132,22 @@ public class SpacePhotoService {
     }
 
     public List<SpacePhotoSubmission> getUserSpacePhotoSubmissions(User user) {
-        return user.getSpacePhotoSubmissionSet().stream().sorted(SpacePhotoSubmission.COMPARATOR_BY_INSTANT)
+        return user.getSpacePhotoSubmissionSet().stream().sorted(SpacePhotoSubmission.COMPARATOR_BY_INSTANT.reversed())
                 .collect(Collectors.toList());
     }
 
     public List<SpacePhotoSubmission> getPendingUserSubmissions(User user) {
         return user.getSpacePhotoSubmissionSet().stream().filter(s -> s.isPending())
-                .sorted(SpacePhotoSubmission.COMPARATOR_BY_INSTANT).collect(Collectors.toList());
+                .sorted(SpacePhotoSubmission.COMPARATOR_BY_INSTANT.reversed()).collect(Collectors.toList());
     }
 
     public List<SpacePhotoSubmission> getAcceptedUserSubmissions(User user) {
         return user.getSpacePhotoSubmissionSet().stream().filter(s -> s.isAccepted())
-                .sorted(SpacePhotoSubmission.COMPARATOR_BY_INSTANT).collect(Collectors.toList());
+                .sorted(SpacePhotoSubmission.COMPARATOR_BY_INSTANT.reversed()).collect(Collectors.toList());
     }
 
     public List<SpacePhotoSubmission> getRejectedUserSubmissions(User user) {
         return user.getSpacePhotoSubmissionSet().stream().filter(s -> s.isRejected())
-                .sorted(SpacePhotoSubmission.COMPARATOR_BY_INSTANT).collect(Collectors.toList());
+                .sorted(SpacePhotoSubmission.COMPARATOR_BY_INSTANT.reversed()).collect(Collectors.toList());
     }
 }

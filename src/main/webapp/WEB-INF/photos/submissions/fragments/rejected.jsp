@@ -24,15 +24,14 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 
 <c:if test="${not empty rejectedSubmissions.pageList}">
-    <c:set var="searchPageUrl" value="${searchUrl}${searchId}"/>
     <ul class="pagination">
         <li><a href="${searchPageUrl}?p=f">&laquo;</a></li>
-        <c:forEach var="page" begin="${requests.firstLinkedPage}" end="${requests.lastLinkedPage}">
+        <c:forEach var="page" begin="${rejectedSubmissions.firstLinkedPage}" end="${rejectedSubmissions.lastLinkedPage}">
             <c:set var="pageNumber" value="${page+1}"/>
-            <c:if test="${page == requests.page}">
+            <c:if test="${page == rejectedSubmissions.page}">
                 <li class="active"><a href="${searchPageUrl}?p=${pageNumber}">${pageNumber}</a></li>
             </c:if>
-            <c:if test="${page != requests.page}">
+            <c:if test="${page != rejectedSubmissions.page}">
                 <li><a href="${searchPageUrl}?p=${pageNumber}">${pageNumber}</a></li>
             </c:if>
         </c:forEach>
@@ -61,7 +60,7 @@
                         <a href="${viewUrl}"><c:out value="${space.presentationName}"/></a>
                     </td>
                     <td>
-                        <img src="${spacePhotoUrl}" class="center-block img-responsive" style="max-height: 450px;"/>
+                        <img src="${spacePhotoUrl}" class="img-responsive" style="max-height: 450px;"/>
                     </td>
                     <td>
                         <a href="mailto:${subject.email}"><c:out value="${subject.name}"/></a> (<c:out value="${subject.username}"/>)
